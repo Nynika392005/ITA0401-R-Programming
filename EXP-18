@@ -1,0 +1,48 @@
+data(iris)
+
+# 1. Boxplot
+boxplot(
+  iris$Sepal.Length,
+  main = "Boxplot of Sepal Length",
+  ylab = "Sepal Length",
+  col = "lightblue"
+)
+
+# 2. Histogram
+hist(
+  iris$Petal.Length,
+  main = "Histogram of Petal Length",
+  xlab = "Petal Length",
+  col = "orange"
+)
+
+# 3. Bar plot
+barplot(
+  table(iris$Species),
+  main = "Species Frequency",
+  xlab = "Species",
+  ylab = "Count",
+  col = "lightgreen"
+)
+
+# 4. Line chart
+plot(
+  1:10,
+  c(12, 15, 13, 18, 20, 17, 22, 25, 23, 28),
+  type = "o",
+  main = "Line Chart",
+  xlab = "Time",
+  ylab = "Value",
+  col = "blue"
+)
+
+# 5. Scatter plot
+plot(
+  iris$Sepal.Length,
+  iris$Petal.Length,
+  main = "Sepal Length vs Petal Length",
+  xlab = "Sepal Length",
+  ylab = "Petal Length",
+  col = "purple",
+  pch = 19
+)
