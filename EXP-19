@@ -1,0 +1,28 @@
+# Read advertising dataset
+advertising <- read.csv("Advertising.csv")
+
+# Build linear regression model
+model <- lm(Sales ~ Spend, data = advertising)
+
+# Display model details
+print(summary(model))
+
+# Predict sales for new advertising spend values
+new_data <- data.frame(Spend = c(50, 100, 150))
+
+predictions <- predict(model, newdata = new_data)
+print(predictions)
+
+# Actual versus predicted sales
+print(head(data.frame(
+  Actual = advertising$Sales,
+  Predicted = predict(model)
+)))
+
+# Calculate model error
+rmse <- sqrt(mean(
+  (advertising$Sales - predict(model))^2,
+  na.rm = TRUE
+))
+
+print(rmse)
