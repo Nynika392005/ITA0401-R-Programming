@@ -1,0 +1,36 @@
+data("Titanic")
+
+# Convert contingency table to a data frame
+titanic_df <- as.data.frame(Titanic)
+
+# Survival versus passenger class
+survival_class <- xtabs(
+  Freq ~ Class + Survived,
+  data = titanic_df
+)
+
+barplot(
+  t(survival_class),
+  beside = TRUE,
+  col = c("tomato", "seagreen"),
+  legend.text = TRUE,
+  main = "Titanic Survival by Class",
+  xlab = "Passenger Class",
+  ylab = "Number of People"
+)
+
+# Modify plot to compare gender
+survival_gender <- xtabs(
+  Freq ~ Sex + Survived,
+  data = titanic_df
+)
+
+barplot(
+  t(survival_gender),
+  beside = TRUE,
+  col = c("tomato", "seagreen"),
+  legend.text = TRUE,
+  main = "Titanic Survival by Gender",
+  xlab = "Gender",
+  ylab = "Number of People"
+)
