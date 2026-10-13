@@ -1,0 +1,24 @@
+data("USArrests")
+
+# Summary statistics
+print(summary(USArrests))
+print(sapply(USArrests, mean))
+print(sapply(USArrests, sd))
+
+# State with highest rape arrest rate
+print(USArrests[which.max(USArrests$Rape), ])
+
+# Maximum and minimum murder rates
+print(USArrests[which.max(USArrests$Murder), ])
+print(USArrests[which.min(USArrests$Murder), ])
+
+# Correlation matrix
+print(cor(USArrests))
+
+# States above median Assault
+median_assault <- median(USArrests$Assault)
+print(USArrests[USArrests$Assault > median_assault, ])
+
+# States in the bottom 25% for Murder
+q25 <- quantile(USArrests$Murder, 0.25)
+print(USArrests[USArrests$Murder <= q25, ])
