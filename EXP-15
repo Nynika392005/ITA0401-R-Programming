@@ -1,0 +1,51 @@
+data(iris)
+
+# Dimensions and structure
+print(dim(iris))
+print(nrow(iris))
+print(ncol(iris))
+str(iris)
+
+# Summary statistics
+print(summary(iris))
+print(sapply(iris[, 1:4], sd))
+print(sapply(iris[, 1:4], quantile))
+
+# Group by Species
+species_avg <- aggregate(
+  . ~ Species,
+  data = iris,
+  FUN = mean
+)
+print(species_avg)
+
+# Pivot table: mean Sepal.Length by Species
+library(reshape2)
+
+pivot <- dcast(
+  iris,
+  Species ~ .,
+  value.var = "Sepal.Length",
+  fun.aggregate = mean
+)
+print(pivot)
+
+# Categorize Sepal.Length
+iris$Sepal_Category <- cut(
+  iris$Sepal.Length,
+  breaks = c(0, 5, 6, 8),
+  labels = c("Short", "Medium", "Long"),
+  include.lowest = TRUE
+)
+
+print(table(iris$Sepal_Category))
+print(table(iris$Species, iris$Sepal_Category))
+
+# Visualize the categories
+barplot(
+  table(iris$Sepal_Category),
+  main = "Sepal Length Categories",
+  xlab = "Category",
+  ylab = "Frequency",
+  col = "lightgreen"
+)
