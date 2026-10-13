@@ -1,0 +1,36 @@
+library(reshape2)
+
+data("airquality")
+
+# Remove rows with missing values for this example
+aq <- na.omit(airquality)
+
+# Melt: convert wide data into long format
+aq_long <- melt(
+  aq,
+  id.vars = c("Month", "Day"),
+  measure.vars = c("Ozone", "Solar.R", "Wind", "Temp"),
+  variable.name = "Variable",
+  value.name = "Value"
+)
+
+print(head(aq_long))
+
+# Cast: reshape into a summary table
+aq_cast <- dcast(
+  aq_long,
+  Month ~ Variable,
+  value.var = "Value",
+  fun.aggregate = mean
+)
+
+print(aq_cast)
+
+# Monthly averages of each variable
+monthly_avg <- aggregate(
+  cbind(Ozone, Solar.R, Wind, Temp) ~ Month,
+  data = aq,
+  FUN = mean
+)
+
+print(monthly_avg)
