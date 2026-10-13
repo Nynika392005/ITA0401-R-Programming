@@ -1,0 +1,42 @@
+data("ChickWeight")
+
+# Explore dataset
+print(head(ChickWeight))
+str(ChickWeight)
+summary(ChickWeight)
+
+# Sort by weight in descending order
+sorted_chick <- ChickWeight[
+  order(ChickWeight$weight, decreasing = TRUE),
+]
+print(head(sorted_chick))
+
+# Melt into long format
+library(reshape2)
+
+chick_long <- melt(
+  ChickWeight,
+  id.vars = c("Chick", "Time", "Diet"),
+  measure.vars = "weight"
+)
+
+print(head(chick_long))
+
+# Average weight by Diet and Time
+chick_cast <- dcast(
+  chick_long,
+  Diet ~ Time,
+  value.var = "value",
+  fun.aggregate = mean
+)
+
+print(chick_cast)
+
+# Average weight for each diet
+diet_avg <- aggregate(
+  weight ~ Diet,
+  data = ChickWeight,
+  FUN = mean
+)
+
+print(diet_avg)
