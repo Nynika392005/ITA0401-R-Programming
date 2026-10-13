@@ -1,0 +1,47 @@
+# Install once if needed
+# install.packages("nnet")
+
+library(nnet)
+data(iris)
+
+# Reproducible random split
+set.seed(123)
+
+train_index <- sample(
+  seq_len(nrow(iris)),
+  size = floor(0.8 * nrow(iris))
+)
+
+train_data <- iris[train_index, ]
+test_data <- iris[-train_index, ]
+
+# Build multinomial logistic regression model
+model <- multinom(
+  Species ~ Petal.Length + Petal.Width,
+  data = train_data,
+  trace = FALSE
+)
+
+# Display model summary
+print(summary(model))
+
+# Predict species on test data
+predictions <- predict(model, newdata = test_data)
+
+# Confusion matrix
+confusion_matrix <- table(
+  Actual = test_data$Species,
+  Predicted = predictions
+)
+
+print(confusion_matrix)
+
+# Calculate accuracy
+accuracy <- sum(diag(confusion_matrix)) /
+            sum(confusion_matrix)
+
+cat("Accuracy:", round(accuracy * 100, 2), "%\n")
+
+# Calculate error rate
+error_rate <- 1 - accuracy
+cat("Error rate:", round(error_rate * 100, 2), "%\n")
