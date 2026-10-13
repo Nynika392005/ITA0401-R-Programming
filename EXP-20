@@ -1,0 +1,47 @@
+data("ChickWeight")
+
+# Build multiple regression model
+model <- lm(
+  weight ~ Time + Diet,
+  data = ChickWeight
+)
+
+# Display regression summary
+print(summary(model))
+
+# Predict weight for new observations
+new_data <- data.frame(
+  Time = c(10, 15, 20),
+  Diet = factor(c("1", "2", "3"),
+                levels = levels(ChickWeight$Diet))
+)
+
+predictions <- predict(model, newdata = new_data)
+print(predictions)
+
+# Predict for the original dataset
+predicted_weight <- predict(model)
+
+# Calculate prediction errors
+errors <- ChickWeight$weight - predicted_weight
+print(head(errors))
+
+# Mean squared error and RMSE
+mse <- mean(errors^2)
+rmse <- sqrt(mse)
+
+cat("MSE:", mse, "\n")
+cat("RMSE:", rmse, "\n")
+
+# Actual versus predicted
+plot(
+  ChickWeight$weight,
+  predicted_weight,
+  xlab = "Actual Weight",
+  ylab = "Predicted Weight",
+  main = "Actual vs Predicted Chick Weight",
+  pch = 19,
+  col = "blue"
+)
+
+abline(0, 1, col = "red", lwd = 2)
